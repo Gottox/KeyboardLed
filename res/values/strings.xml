@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello World, LedActivity!</string>
+    <string name="app_name">KeyboardLed</string>
+    <string name="autostart">Auto start</string>
+    <string name="backlight_on">Backlight on</string>
+    <string name="enable">Enable</string>
+    <string name="version">20111009</string>
+</resources>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:layout_gravity="center"
+	android:gravity="center" android:orientation="horizontal">
+	<ImageView android:src="@drawable/icon" android:id="@+id/imageView1"
+		android:layout_height="wrap_content" android:layout_width="wrap_content"
+		android:layout_gravity="center" android:padding="50sp"></ImageView>
+	<TableLayout android:id="@+id/tableLayout1"
+		android:layout_height="wrap_content" android:layout_width="match_parent">
+		<TableRow android:id="@+id/TableRow02" android:layout_height="wrap_content"
+			android:layout_width="wrap_content">
+			<TextView android:layout_height="wrap_content"
+				android:textAppearance="?android:attr/textAppearanceLarge"
+				android:id="@+id/TextView02" android:text="@string/enable"></TextView>
+			<ToggleButton android:text="ToggleButton"
+				android:layout_height="wrap_content" android:layout_width="wrap_content"
+				android:id="@+id/enable"></ToggleButton>
+		</TableRow>
+		<TableRow android:id="@+id/TableRow01" android:layout_height="wrap_content"
+			android:layout_width="wrap_content">
+			<TextView android:text="@string/autostart"
+				android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge"
+				android:layout_width="wrap_content"></TextView>
+			<ToggleButton android:text="ToggleButton"
+				android:layout_height="wrap_content" android:layout_width="wrap_content"
+				android:id="@+id/autostart"></ToggleButton>
+		</TableRow>
+		<TableRow android:id="@+id/tableRow1" android:layout_width="wrap_content"
+			android:layout_height="wrap_content">
+			<TextView android:text="@string/backlight_on"
+				android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge"
+				android:layout_width="wrap_content"></TextView>
+			<ToggleButton android:text="ToggleButton"
+				android:layout_height="wrap_content" android:layout_width="wrap_content"
+				android:id="@+id/backlight"></ToggleButton>
+		</TableRow>
+		<TableRow android:id="@+id/tableRow2" android:layout_height="wrap_content" android:layout_width="wrap_content">
+		</TableRow>
+	</TableLayout>
+</LinearLayout>
