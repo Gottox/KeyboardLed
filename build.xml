@@ -1,0 +1,22 @@
+<project name="about" default="about" basedir="./res/layout/">
+	<target name="init">
+		<available file="about.xml" property="about" />
+	</target>
+	<target name="about" depends="init" unless="about">
+		<echo file="about.xml"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:flattr_sdk="http://schemas.flattr4android.com/sdk"
+	android:orientation="vertical" android:layout_width="match_parent"
+	android:layout_height="match_parent" android:gravity="center" android:padding="10sp">
+	<TextView android:text="@string/app_name"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+		android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_marginRight="20sp" android:layout_marginLeft="20sp"></TextView>
+	<TextView android:text="@string/version"
+		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_marginBottom="20sp"></TextView>
+	<TextView android:text="@string/copyright" android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView1"></TextView>
+	<TextView android:autoLink="web" android:text="http://github.com/Gottox/KeyboardLed" android:id="@+id/textView2" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+</LinearLayout>
+]]></echo>
+	</target>
+</project>

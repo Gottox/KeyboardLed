@@ -8,8 +8,10 @@ import android.app.Dialog;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.Preference;
 import android.test.IsolatedContext;
 import android.util.Log;
 import android.view.Menu;
@@ -23,6 +25,7 @@ import android.widget.CompoundButton;
 import android.widget.ToggleButton;
 
 public class LedActivity extends Activity {
+	SharedPreferences pref;
 	Handler handler = new Handler();
 	ToggleButton enable, autostart, backlight;
 	Thread bg = new Thread(new Runnable() {
@@ -56,8 +59,9 @@ public class LedActivity extends Activity {
 		@Override
 		public void onCheckedChanged(CompoundButton buttonView,
 				boolean isChecked) {
-			getSharedPreferences("KeyboardLed", MODE_PRIVATE).edit()
-					.putBoolean("autostart", isChecked);
+			Editor editor = pref.edit();
+			editor.putBoolean("autostart", isChecked);
+			editor.commit();
 		}
 	};
 
@@ -72,7 +76,7 @@ public class LedActivity extends Activity {
 				break;
 			case R.id.enable:
 				Intent i = new Intent(LedActivity.this, LedService.class);
-				if(isServiceRunning())
+				if (isServiceRunning())
 					stopService(i);
 				else
 					startService(i);
@@ -87,8 +91,9 @@ public class LedActivity extends Activity {
 		inflater.inflate(R.menu.menu, menu);
 		return true;
 	}
+
 	Dialog about;
-	
+
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.about:
@@ -98,12 +103,12 @@ public class LedActivity extends Activity {
 			return super.onOptionsItemSelected(item);
 		}
 	}
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		this.setContentView(R.layout.main);
+		pref = getSharedPreferences("KeyboardLed", MODE_PRIVATE);
 
 		enable = (ToggleButton) this.findViewById(R.id.enable);
 		autostart = (ToggleButton) this.findViewById(R.id.autostart);
@@ -112,9 +117,11 @@ public class LedActivity extends Activity {
 		enable.setOnClickListener(buttonListener);
 		backlight.setOnClickListener(buttonListener);
 		autostart.setOnCheckedChangeListener(autostartListener);
+		autostart.setChecked(getSharedPreferences("KeyboardLed", MODE_PRIVATE)
+				.getBoolean("autostart", false));
 		Led.init(this);
 		bg.start();
-		
+
 		about = new Dialog(this);
 		about.setContentView(R.layout.about);
 		about.setTitle("About");
@@ -124,7 +131,8 @@ public class LedActivity extends Activity {
 		ActivityManager manager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
 		for (RunningServiceInfo service : manager
 				.getRunningServices(Integer.MAX_VALUE)) {
-			if (LedService.class.getCanonicalName().equals(service.service.getClassName())) { 
+			if (LedService.class.getCanonicalName().equals(
+					service.service.getClassName())) {
 				return true;
 			}
 		}

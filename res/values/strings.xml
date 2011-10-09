@@ -6,4 +6,5 @@
     <string name="backlight_on">Backlight on</string>
     <string name="enable">Enable</string>
     <string name="version">20111009</string>
+    <string name="copyright">© Enno Boland 2011</string>
 </resources>

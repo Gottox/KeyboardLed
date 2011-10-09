@@ -3,6 +3,7 @@ package com.gottox.keyboardled;
 import android.app.Service;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.IBinder;
 
 public class LedService extends Service {
@@ -16,6 +17,7 @@ public class LedService extends Service {
 	@Override
 	public void onCreate() {
 		Led.init(this);
+		onConfigurationChanged(getResources().getConfiguration());
 	}
 
 	@Override

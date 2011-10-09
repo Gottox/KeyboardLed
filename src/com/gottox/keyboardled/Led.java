@@ -3,11 +3,13 @@ package com.gottox.keyboardled;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 
 import android.content.Context;
@@ -16,16 +18,18 @@ import android.util.Log;
 final public class Led {
 	private final static String BRIGHTNESS_FILE = "/sys/class/leds/keyboard-backlight/brightness";
 	private final static String MAX_BRIGHTNESS_FILE = "/sys/class/leds/keyboard-backlight/max_brightness";
-	
+
 	static public boolean init(Context context) {
 		Process p;
+		if (isInit())
+			return true;
 		int uid = context.getApplicationContext().getApplicationInfo().uid;
 		try {
 			p = Runtime.getRuntime().exec("su");
 
 			DataOutputStream os = new DataOutputStream(p.getOutputStream());
 			os.writeBytes("chown " + uid + " " + BRIGHTNESS_FILE + "\n");
-			os.writeBytes("chmod u+rw " + BRIGHTNESS_FILE + "\n");
+			os.writeBytes("chmod 0600 " + BRIGHTNESS_FILE + "\n");
 			os.writeBytes("exit\n");
 			os.flush();
 			p.waitFor();
@@ -34,7 +38,12 @@ final public class Led {
 			return false;
 		}
 	}
-	
+
+	static private boolean isInit() {
+		File f = new File(BRIGHTNESS_FILE);
+		return f.canRead() && f.canWrite();
+	}
+
 	static private int getValue(String path) {
 		try {
 			FileInputStream fstream = new FileInputStream(path);
